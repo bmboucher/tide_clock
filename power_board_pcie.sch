@@ -148,7 +148,7 @@
 <libraries>
 <library name="tide_clock" urn="urn:adsk.eagle:library:5099731">
 <packages>
-<package name="PCIE_EDGE" urn="urn:adsk.eagle:footprint:5128356/5" library_version="38">
+<package name="PCIE_EDGE" urn="urn:adsk.eagle:footprint:5128356/6" library_version="55">
 <wire x1="5.05" y1="0" x2="5.05" y2="-8.4" width="0.0762" layer="37"/>
 <wire x1="5.05" y1="-8.4" x2="16.25" y2="-8.4" width="0.0762" layer="37"/>
 <wire x1="16.25" y1="-8.4" x2="16.25" y2="0" width="0.0762" layer="37"/>
@@ -168,7 +168,7 @@
 <smd name="P6" x="22.7" y="-5.6" dx="0.7" dy="5.6" layer="16" rot="R180" cream="no"/>
 <smd name="P5" x="23.7" y="-5.6" dx="0.7" dy="5.6" layer="16" rot="R180" cream="no"/>
 <smd name="P4" x="24.7" y="-5.6" dx="0.7" dy="5.6" layer="16" rot="R180" cream="no"/>
-<smd name="PWR3" x="19.7" y="-4.4" dx="2.7" dy="3.2" layer="1"/>
+<smd name="PWR3" x="19.7" y="-4.4" dx="2.7" dy="3.2" layer="1" thermals="no" cream="no"/>
 <smd name="P1" x="22.7" y="-5.6" dx="0.7" dy="5.6" layer="1" cream="no"/>
 <smd name="P2" x="23.7" y="-5.6" dx="0.7" dy="5.6" layer="1" cream="no"/>
 <smd name="P3" x="24.7" y="-5.6" dx="0.7" dy="5.6" layer="1" cream="no"/>
@@ -189,7 +189,7 @@
 <text x="0" y="-1.485" size="1.27" layer="27" align="top-center">&gt;VALUE</text>
 <rectangle x1="-2.54" y1="-0.889" x2="-1.397" y2="0.889" layer="21"/>
 </package>
-<package name="SOIC127P600X175-8" urn="urn:adsk.eagle:footprint:5130068/1" library_version="38">
+<package name="SOIC127P600X175-8" urn="urn:adsk.eagle:footprint:5130068/1" library_version="55">
 <description>8-SOIC, 1.27 mm pitch, 6.00 mm span, 4.90 X 3.90 X 1.75 mm body
 &lt;p&gt;8-pin SOIC package with 1.27 mm pitch, 6.00 mm span with body size 4.90 X 3.90 X 1.75 mm&lt;/p&gt;</description>
 <circle x="-2.7288" y="2.7099" radius="0.25" width="0" layer="21"/>
@@ -214,7 +214,7 @@
 <text x="0" y="3.5949" size="1.27" layer="25" align="bottom-center">&gt;NAME</text>
 <text x="0" y="-3.185" size="1.27" layer="27" align="top-center">&gt;VALUE</text>
 </package>
-<package name="SOIC127P600X175-14" urn="urn:adsk.eagle:footprint:5131251/1" library_version="38">
+<package name="SOIC127P600X175-14" urn="urn:adsk.eagle:footprint:5131251/1" library_version="55">
 <description>14-SOIC, 1.27 mm pitch, 6.00 mm span, 8.65 X 3.90 X 1.75 mm body
 &lt;p&gt;14-pin SOIC package with 1.27 mm pitch, 6.00 mm span with body size 8.65 X 3.90 X 1.75 mm&lt;/p&gt;</description>
 <circle x="-2.7288" y="4.5024" radius="0.25" width="0" layer="21"/>
@@ -245,7 +245,7 @@
 <text x="0" y="5.3874" size="1.27" layer="25" align="bottom-center">&gt;NAME</text>
 <text x="0" y="-5.01" size="1.27" layer="27" align="top-center">&gt;VALUE</text>
 </package>
-<package name="SOP50P490X110-10" urn="urn:adsk.eagle:footprint:5140811/1" library_version="38">
+<package name="SOP50P490X110-10" urn="urn:adsk.eagle:footprint:5140811/1" library_version="55">
 <description>10-SOP, 0.50 mm pitch, 4.90 mm span, 3.00 X 3.00 X 1.10 mm body
 &lt;p&gt;10-pin SOP package with 0.50 mm pitch, 4.90 mm span with body size 3.00 X 3.00 X 1.10 mm&lt;/p&gt;</description>
 <circle x="-2.178" y="1.6649" radius="0.25" width="0" layer="21"/>
@@ -382,7 +382,7 @@
 </package>
 </packages>
 <packages3d>
-<package3d name="PCIE_EDGE" urn="urn:adsk.eagle:package:5128360/6" type="box" library_version="38">
+<package3d name="PCIE_EDGE" urn="urn:adsk.eagle:package:5128360/7" type="box" library_version="55">
 <packageinstances>
 <packageinstance name="PCIE_EDGE"/>
 </packageinstances>
@@ -394,21 +394,21 @@
 <packageinstance name="SOD3616X130"/>
 </packageinstances>
 </package3d>
-<package3d name="SOIC127P600X175-8" urn="urn:adsk.eagle:package:5130063/1" type="model" library_version="38">
+<package3d name="SOIC127P600X175-8" urn="urn:adsk.eagle:package:5130063/1" type="model" library_version="55">
 <description>8-SOIC, 1.27 mm pitch, 6.00 mm span, 4.90 X 3.90 X 1.75 mm body
 &lt;p&gt;8-pin SOIC package with 1.27 mm pitch, 6.00 mm span with body size 4.90 X 3.90 X 1.75 mm&lt;/p&gt;</description>
 <packageinstances>
 <packageinstance name="SOIC127P600X175-8"/>
 </packageinstances>
 </package3d>
-<package3d name="SOIC127P600X175-14" urn="urn:adsk.eagle:package:5131241/1" type="model" library_version="38">
+<package3d name="SOIC127P600X175-14" urn="urn:adsk.eagle:package:5131241/1" type="model" library_version="55">
 <description>14-SOIC, 1.27 mm pitch, 6.00 mm span, 8.65 X 3.90 X 1.75 mm body
 &lt;p&gt;14-pin SOIC package with 1.27 mm pitch, 6.00 mm span with body size 8.65 X 3.90 X 1.75 mm&lt;/p&gt;</description>
 <packageinstances>
 <packageinstance name="SOIC127P600X175-14"/>
 </packageinstances>
 </package3d>
-<package3d name="SOP50P490X110-10" urn="urn:adsk.eagle:package:5140809/1" type="model" library_version="38">
+<package3d name="SOP50P490X110-10" urn="urn:adsk.eagle:package:5140809/1" type="model" library_version="55">
 <description>10-SOP, 0.50 mm pitch, 4.90 mm span, 3.00 X 3.00 X 1.10 mm body
 &lt;p&gt;10-pin SOP package with 0.50 mm pitch, 4.90 mm span with body size 3.00 X 3.00 X 1.10 mm&lt;/p&gt;</description>
 <packageinstances>
@@ -572,7 +572,7 @@
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="PCIE_EDGE" urn="urn:adsk.eagle:component:5128361/7" prefix="J" library_version="38">
+<deviceset name="PCIE_EDGE" urn="urn:adsk.eagle:component:5128361/8" prefix="J" library_version="55">
 <gates>
 <gate name="G$1" symbol="PCIE_EDGECONN" x="2.54" y="2.54"/>
 </gates>
@@ -591,7 +591,7 @@
 <connect gate="G$1" pin="PWR2" pad="P$3 P$6" route="any"/>
 </connects>
 <package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:5128360/6"/>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:5128360/7"/>
 </package3dinstances>
 <technologies>
 <technology name=""/>
@@ -618,7 +618,7 @@
 </device>
 </devices>
 </deviceset>
-<deviceset name="AZ4558CMTR-G1" urn="urn:adsk.eagle:component:5130062/2" library_version="38">
+<deviceset name="AZ4558CMTR-G1" urn="urn:adsk.eagle:component:5130062/2" library_version="55">
 <gates>
 <gate name="G$1" symbol="DUAL_OPAMP" x="0" y="0" swaplevel="1"/>
 </gates>
@@ -643,7 +643,7 @@
 </device>
 </devices>
 </deviceset>
-<deviceset name="74HCT08D" urn="urn:adsk.eagle:component:5131264/1" prefix="U" library_version="38">
+<deviceset name="74HCT08D" urn="urn:adsk.eagle:component:5131264/1" prefix="U" library_version="55">
 <gates>
 <gate name="G$1" symbol="QUAD_AND" x="-2.54" y="0" swaplevel="1"/>
 </gates>
@@ -674,7 +674,7 @@
 </device>
 </devices>
 </deviceset>
-<deviceset name="DAC5574" urn="urn:adsk.eagle:component:5145435/3" library_version="38">
+<deviceset name="DAC5574" urn="urn:adsk.eagle:component:5145435/3" library_version="55">
 <gates>
 <gate name="G$1" symbol="QUAD_DAC" x="0" y="0"/>
 </gates>
@@ -10119,7 +10119,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </class>
 </classes>
 <parts>
-<part name="J1" library="tide_clock" library_urn="urn:adsk.eagle:library:5099731" deviceset="PCIE_EDGE" device="" package3d_urn="urn:adsk.eagle:package:5128360/6"/>
+<part name="J1" library="tide_clock" library_urn="urn:adsk.eagle:library:5099731" deviceset="PCIE_EDGE" device="" package3d_urn="urn:adsk.eagle:package:5128360/7"/>
 <part name="C3" library="tide_clock" library_urn="urn:adsk.eagle:library:5099731" deviceset="100U_CAP" device="" package3d_urn="urn:adsk.eagle:package:5153937/4"/>
 <part name="C1" library="tide_clock" library_urn="urn:adsk.eagle:library:5099731" deviceset="100U_CAP" device="" package3d_urn="urn:adsk.eagle:package:5153937/4"/>
 <part name="C2" library="tide_clock" library_urn="urn:adsk.eagle:library:5099731" deviceset="100U_CAP" device="" package3d_urn="urn:adsk.eagle:package:5153937/4"/>
