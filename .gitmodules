@@ -1,0 +1,3 @@
+[submodule "firmware/Tide_calculator"]
+	path = firmware/Tide_calculator
+	url = https://github.com/millerlp/Tide_calculator.git
