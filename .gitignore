@@ -3,4 +3,4 @@
 *.b#*
 *.s#*
 *.l#*
-.gcode
+*.gcode
