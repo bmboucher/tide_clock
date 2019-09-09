@@ -49,10 +49,21 @@ void publish_tides() {
   message += String(tide, 3);
   message += " ft\n\nTIDE TABLE\n----------\n";
   for (int idx = 0; idx < NUM_TUBES; idx++) {
+    float curr_tide = hour_tides[idx];
+    float prev_tide = hour_tides[idx == 0 ? NUM_TUBES - 1 : idx - 1];
+    float next_tide = hour_tides[idx == NUM_TUBES - 1 ? 0 : idx + 1];
+    
     message += datestr(hour_marks[idx]);
     message += " > ";
     message += String(hour_tides[idx], 3);
-    message += " ft\n";
+    message += " ft";
+    if (curr_tide < prev_tide && curr_tide < next_tide) {
+      message += " LOW";
+    } else if (curr_tide > prev_tide && curr_tide > next_tide) {
+      message += " HIGH";
+    }
+    message += "\n";
+    
     if (idx == PAST_TIDES_OFFSET) {
       message += "=============== NOW ===============\n";
     }
