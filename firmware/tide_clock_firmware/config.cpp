@@ -72,7 +72,7 @@ void publish_config() {
 #define MIN_DAC_VALUE 101
 #define MAX_DAC_VALUE 225
 void init_config() {
-  Serial.println("Initializing DAC calibration...");
+  Serial.println("Resetting configuration to defaults");
   for (int dac_number = 0; dac_number < NUM_TUBES; dac_number++) {
     for (int cal_pt = 0; cal_pt < NUM_DAC_CALIBRATION_POINTS; cal_pt++) {
       int dac_value = int(MIN_DAC_VALUE
@@ -80,6 +80,7 @@ void init_config() {
       set_dac_calibration(dac_number, cal_pt, dac_value);
     }
   }
+  set_time_steps_offset(0);
   EEPROM.write(CALIBRATION_STATUS_BYTE_ADDR, 0x00);
   save_config();
 }

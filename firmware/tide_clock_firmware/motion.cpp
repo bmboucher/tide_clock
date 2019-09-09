@@ -36,13 +36,19 @@ void motor_step(int dir = 1) {
 
 void init_position() {
   if (digitalRead(HALL) == LOW) {
+    Serial.println("Hall sensor is already tripped - backing up");
     for (int i = 0; i < CLOCK_REV_STEPS / 4; i++) {
       motor_step(-1);
       delay(MIN_MS_PER_STEP);
     }
   }
+  step_count = 0;
   while (digitalRead(HALL) == HIGH) {
     motor_step(1);
+    if (step_count >= CLOCK_REV_STEPS) {
+      Serial.println("Full revolution completed without tripping Hall sensor!!!");
+      break;
+    }
     delay(MIN_MS_PER_STEP);
   }
   step_count = 0;
@@ -64,7 +70,12 @@ void update_time_position() {
       if (digitalRead(HALL) == HIGH) {
         prev_hall_steps++;
       } else {
-        if (prev_hall_steps > CLOCK_REV_STEPS / 4) step_count = 0;
+        if (prev_hall_steps > CLOCK_REV_STEPS / 4) {
+          Serial.print("Hall sensor tripped at ");
+          Serial.print(datestr());
+          Serial.println(" - resetting steps");
+          step_count = 0;
+        }
         prev_hall_steps = 0;
       }
     }
