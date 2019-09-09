@@ -5,11 +5,12 @@
 #define MAX_VIN 3.3
 const float MAIN_BUS_FACTOR = MAX_VIN * (R1 + R2) / (1024 * R2);
 
+#define MAIN_BUS_CUTOFF 150.0
+
 float get_main_bus_voltage() {
   return float(analogRead(MAIN_BUS)) * MAIN_BUS_FACTOR;
 }
 
-#define MAIN_BUS_CUTOFF 150.0
 bool main_bus_state = false;
 void check_main_bus_voltage() {
   float voltage = get_main_bus_voltage();

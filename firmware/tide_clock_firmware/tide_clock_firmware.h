@@ -7,12 +7,12 @@
 
 // Pin definitions
 #define MAIN_BUS A0
-#define TMR1     4
-#define TMR2     3
-#define PHA_A    8
-#define PHA_B    6
-#define NEOPIXEL 5
-#define HALL     7
+#define TMR1     D4
+#define TMR2     D3
+#define PHA_A    D8
+#define PHA_B    D6
+#define NEOPIXEL D5
+#define HALL     D7
 
 extern ESP8266WebServer server;
 
@@ -36,7 +36,6 @@ byte get_dac_calibration(int dac_number, int cal_point);
 void set_dac_calibration(int dac_number, int cal_point, byte cal_value);
 int get_time_steps_offset();
 void set_time_steps_offset(int offset);
-
 void save_config();
 
 /*** DACs ***/
@@ -55,3 +54,4 @@ void stop_anode_timers();
 /*** Motion ***/
 void init_position();
 void update_time_position();
+int get_current_steps();

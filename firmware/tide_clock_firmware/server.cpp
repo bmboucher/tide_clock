@@ -37,6 +37,18 @@ void server_loop() {
   MDNS.update();
 }
 
+void publish_status() {
+  float bus_voltage = get_main_bus_voltage();
+  String message = "{\"main_bus\":";
+  message += String(bus_voltage, 2);
+  message += ", \"current_time\":\"";
+  message += datestr();
+  message += "\", \"position\":";
+  message += String(get_current_steps());
+  message += "}";
+  server.send(200, "application/json", message);
+}
+
 void start_server() {
   // Configure and start HTTP server
   server.on("/tides", publish_tides);
@@ -45,6 +57,7 @@ void start_server() {
     init_config();
     publish_config();
   });
+  server.on("/status", publish_status);
   server.begin();
   Serial.println("HTTP server started");
 }
