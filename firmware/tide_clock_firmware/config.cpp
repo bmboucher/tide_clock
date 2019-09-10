@@ -4,8 +4,10 @@
 
 #define DAC_CALIBRATION_BYTES (NUM_TUBES*NUM_DAC_CALIBRATION_POINTS)
 
-#define CALIBRATION_STATUS_BYTE_ADDR DAC_CALIBRATION_BYTES
-#define TIME_STEPS_OFFSET_ADDR (CALIBRATION_STATUS_BYTE_ADDR + 1)
+#define CALIBRATION_STATUS_BYTE_ADDR  DAC_CALIBRATION_BYTES
+#define TIME_STEPS_OFFSET_ADDR        (CALIBRATION_STATUS_BYTE_ADDR + 1)
+#define NEOPIXEL_OFFSET_ADDR          (TIME_STEPS_OFFSET_ADDR + 2)
+#define NEOPIXEL_BRIGHTNESS_ADDR      (NEOPIXEL_OFFSET_ADDR + 1)
 
 template <class T> int EEPROM_writeAnything(int ee, const T& value)
 {
@@ -45,6 +47,20 @@ void set_time_steps_offset(int offset) {
   EEPROM_writeAnything(TIME_STEPS_OFFSET_ADDR, short_offset);
 }
 
+byte get_neopixel_offset() {
+  return EEPROM.read(NEOPIXEL_OFFSET_ADDR);
+}
+void set_neopixel_offset(byte offset) {
+  EEPROM.write(NEOPIXEL_OFFSET_ADDR, offset);  
+}
+
+byte get_neopixel_brightness() {
+  return EEPROM.read(NEOPIXEL_BRIGHTNESS_ADDR);
+}
+void set_neopixel_brightness(byte brightness) {
+  EEPROM.write(NEOPIXEL_BRIGHTNESS_ADDR, brightness);  
+}
+
 void setup_eeprom() {
   // Setup EEPROM to store calibration values
   EEPROM.begin(256);
@@ -81,6 +97,7 @@ void init_config() {
     }
   }
   set_time_steps_offset(0);
+  set_neopixel_offset(0);
   EEPROM.write(CALIBRATION_STATUS_BYTE_ADDR, 0x00);
   save_config();
 }

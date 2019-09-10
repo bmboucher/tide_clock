@@ -8,6 +8,10 @@ int last_hour_mark = -1;
 time_t hour_marks[NUM_TUBES];
 float hour_tides[NUM_TUBES];
 
+const float MIN_TIDE = -1.0;
+const float MAX_TIDE = 6.0;
+float tide_heights_by_tube[NUM_TUBES];
+
 #define PAST_TIDES_OFFSET 11
 
 void update_tides() {
@@ -28,6 +32,8 @@ void update_tides() {
       float tide = myTideCalc.currentTide(dt_mark);
       hour_marks[hour_idx] = mark;
       hour_tides[hour_idx] = tide;
+      float tide_fraction = max(0.0f, min(1.0f, (tide - MIN_TIDE) / (MAX_TIDE - MIN_TIDE)));
+      tide_heights_by_tube[ltime->tm_hour] = tide_fraction;
 
       Serial.print(datestr(mark));
       Serial.print(" - Tide = ");
@@ -47,7 +53,16 @@ void publish_tides() {
   float tide = myTideCalc.currentTide(dt);
   message += "Current tide: ";
   message += String(tide, 3);
-  message += " ft\n\nTIDE TABLE\n----------\n";
+  message += " ft\n";
+
+  time_t sunrise = 0;
+  time_t sunset = 0;
+  get_sunrise_sunset(sunrise, sunset, true);
+  message += "Sunrise:      ";
+  message += datestr(sunrise);
+  message += "\nSunset:       ";
+  message += datestr(sunset);
+  message += "\n\nTIDE TABLE\n----------\n";
   for (int idx = 0; idx < NUM_TUBES; idx++) {
     float curr_tide = hour_tides[idx];
     float prev_tide = hour_tides[idx == 0 ? NUM_TUBES - 1 : idx - 1];
@@ -70,11 +85,4 @@ void publish_tides() {
   }
 
   server.send(200, "text/plain", message);
-}
-
-void get_tides_by_hour(float* tides) {
-  for (int i = 0; i < NUM_TUBES; i++) {
-    struct tm * ltime = localtime(&hour_marks[i]);
-    tides[ltime->tm_hour] = hour_tides[i];
-  }
 }

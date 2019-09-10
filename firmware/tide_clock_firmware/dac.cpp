@@ -2,8 +2,12 @@
 
 #include <Wire.h>
 
+// Buffer for DAC values prevents unnecessary I2C communication
+byte prev_dac_value[NUM_TUBES];
+
 void init_dacs() {
   Wire.begin();
+  for (int i = 0; i < NUM_TUBES; i++) prev_dac_value[i] = 0x00;
 }
 
 #define PCA9540B_ADDR     0x70
@@ -68,8 +72,10 @@ void set_dac_by_addr(byte dac_addr, byte dac_value) {
 }
 
 void set_dac_value(int dac_number, byte dac_value) {
+  if (prev_dac_value[dac_number] == dac_value) return;
   byte dac_addr = pgm_read_byte(DAC_ADDRESSES + dac_number);
   set_dac_by_addr(dac_addr, dac_value);
+  prev_dac_value[dac_number] = dac_value;
 }
 
 void set_dac_value_float(int dac_number, float dac_value) {

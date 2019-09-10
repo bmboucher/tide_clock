@@ -24,9 +24,12 @@ void start_server();
 void server_loop();
 
 /*** Tide calculator ***/
+extern float tide_heights_by_tube[NUM_TUBES];
 void update_tides();
 void publish_tides();
-void get_tides_by_hour(float* tides);
+
+/*** Solar calculator ***/
+void get_sunrise_sunset(time_t& sunrise, time_t& sunset, bool fwd_only = false);
 
 /*** EEPROM configuration ***/
 void setup_eeprom();
@@ -36,6 +39,10 @@ byte get_dac_calibration(int dac_number, int cal_point);
 void set_dac_calibration(int dac_number, int cal_point, byte cal_value);
 int get_time_steps_offset();
 void set_time_steps_offset(int offset);
+byte get_neopixel_offset();
+void set_neopixel_offset(byte offset);
+byte get_neopixel_brightness();
+void set_neopixel_brightness(byte brightness);
 void save_config();
 
 /*** DACs ***/
@@ -55,3 +62,8 @@ void stop_anode_timers();
 void init_position();
 void update_time_position();
 int get_current_steps();
+
+/*** Display (IN-9s + neopixels) ***/
+void init_display();
+void display_loop();
+void set_display_enabled(bool en);

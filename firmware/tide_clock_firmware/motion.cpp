@@ -55,6 +55,10 @@ void init_position() {
   prev_hall_steps = 0;
 }
 
+// Minimum number of back steps for which the cylinder will do a full revolution
+// This prevents excessive retracing when the Hall sensor is tripped
+#define MIN_BACK_MOTION 10 // Roughly 5 minutes
+
 void update_time_position() {
   unsigned long timestamp = millis();
   if (timestamp < last_step_ms) last_step_ms = timestamp;
@@ -67,6 +71,10 @@ void update_time_position() {
   while (tgt_steps < 0) tgt_steps += CLOCK_REV_STEPS;
   while (tgt_steps >= CLOCK_REV_STEPS) tgt_steps -= CLOCK_REV_STEPS;
   if (tgt_steps != step_count) {
+    int back_steps = step_count - tgt_steps;
+    while (back_steps < 0) back_steps += CLOCK_REV_STEPS;
+    if (back_steps < MIN_BACK_MOTION) return;
+    
     motor_step();
     if (digitalRead(HALL) == HIGH) {
       prev_hall_steps++;

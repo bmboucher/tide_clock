@@ -19,6 +19,7 @@ void setup() {
   update_tides();
   setup_eeprom();
   init_dacs();
+  init_display();
   
   #ifdef MOTION
   init_position();
@@ -30,21 +31,14 @@ void setup() {
   digitalWrite(LED_BUILTIN, LOW);
 }
 
-#define MAJOR_LOOP_DELAY 1000
-unsigned long last_major_loop = 0;
-
 void loop() {
-  unsigned long timestamp = millis();
-  if (timestamp < last_major_loop) last_major_loop = timestamp;
-  if (timestamp >= last_major_loop + MAJOR_LOOP_DELAY) {    
-    update_tides();
-    check_main_bus_voltage();
-    last_major_loop = timestamp;
-  }
+  update_tides();
+  check_main_bus_voltage();
 
   #ifdef MOTION
   update_time_position();
   #endif
-  
+
+  display_loop();
   server_loop();
 }
