@@ -71,6 +71,9 @@ void set_dac_by_addr(byte dac_addr, byte dac_value) {
   Wire.endTransmission();
 }
 
+byte get_dac_value(int dac_number) {
+  return prev_dac_value[dac_number];
+}
 void set_dac_value(int dac_number, byte dac_value) {
   if (prev_dac_value[dac_number] == dac_value) return;
   byte dac_addr = pgm_read_byte(DAC_ADDRESSES + dac_number);
@@ -87,7 +90,7 @@ void set_dac_value_float(int dac_number, float dac_value) {
   } else {
     int prev_pt = int(dac_value * (NUM_DAC_CALIBRATION_POINTS - 1));
     int next_pt = prev_pt + 1;
-    float fraction = dac_value * (NUM_DAC_CALIBRATION_POINTS - 1) - 1;
+    float fraction = dac_value * (NUM_DAC_CALIBRATION_POINTS - 1) - prev_pt;
     float prev_val = get_dac_calibration(dac_number, prev_pt);
     float next_val = get_dac_calibration(dac_number, next_pt);
     dac_value_byte = int(prev_val + (next_val - prev_val) * fraction);    

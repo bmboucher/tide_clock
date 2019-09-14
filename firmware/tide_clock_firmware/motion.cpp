@@ -32,6 +32,22 @@ void motor_step(int dir = 1) {
   digitalWrite(PHA_B, PHASES[curr_phase][1]);
 
   last_step_ms = millis();
+
+  if (dir > 0) {
+    if (digitalRead(HALL) == HIGH) {
+      prev_hall_steps++;
+    } else {
+      if (prev_hall_steps > CLOCK_REV_STEPS / 4) {
+        Serial.print("Hall sensor tripped at position ");
+        Serial.println(step_count);
+        Serial.print(" / time: ");
+        Serial.print(datestr());
+        Serial.println(" - resetting steps");
+        step_count = 0;
+      }
+      prev_hall_steps = 0;
+    }
+  }
 }
 
 void init_position() {
@@ -76,20 +92,33 @@ void update_time_position() {
     if (back_steps < MIN_BACK_MOTION) return;
     
     motor_step();
-    if (digitalRead(HALL) == HIGH) {
-      prev_hall_steps++;
-    } else {
-      if (prev_hall_steps > CLOCK_REV_STEPS / 4) {
-        Serial.print("Hall sensor tripped at ");
-        Serial.print(datestr());
-        Serial.println(" - resetting steps");
-        step_count = 0;
-      }
-      prev_hall_steps = 0;
-    }
   }
 }
 
 int get_current_steps() {
   return step_count;
+}
+
+#define LOCAL_MOVE_STEPS (MOTOR_REV_STEPS/2)
+#define LOCAL_MOVE_SLOWDOWN 3
+void seek_position(int position) {
+  while (position < 0) position += CLOCK_REV_STEPS;
+  while (position >= CLOCK_REV_STEPS) position -= CLOCK_REV_STEPS;
+  int my_step_count = 0;
+  while (my_step_count <= CLOCK_REV_STEPS + MOTOR_REV_STEPS && step_count != position) {
+    motor_step();
+    my_step_count++;
+    int diff = position - step_count;
+    while (diff < 0) diff += CLOCK_REV_STEPS;
+    while (diff >= CLOCK_REV_STEPS) diff -= CLOCK_REV_STEPS;
+    if (diff <= LOCAL_MOVE_STEPS) {
+      delay(LOCAL_MOVE_SLOWDOWN * MIN_MS_PER_STEP);
+    } else {
+      delay(MIN_MS_PER_STEP);
+    }
+  }
+}
+
+void seek_position_relative(int pos_diff) {
+  seek_position(step_count + pos_diff);
 }

@@ -14,6 +14,15 @@
 #define NEOPIXEL D5
 #define HALL     D7
 
+// Display modes
+#define NORMAL      1
+#define DEPOISON    2
+#define WAVE        3
+#define ALTERNATING 4
+#define RANDOM      5
+#define PULSE       6
+#define DEMO        7
+
 extern ESP8266WebServer server;
 
 String datestr(time_t now = 0);
@@ -41,12 +50,13 @@ int get_time_steps_offset();
 void set_time_steps_offset(int offset);
 byte get_neopixel_offset();
 void set_neopixel_offset(byte offset);
-byte get_neopixel_brightness();
-void set_neopixel_brightness(byte brightness);
+byte get_neopixel_brightness(bool day);
+void set_neopixel_brightness(bool day, byte brightness);
 void save_config();
 
 /*** DACs ***/
 void init_dacs();
+byte get_dac_value(int dac_number);
 void set_dac_value(int dac_number, byte dac_value);
 void set_dac_value_float(int dac_number, float dac_value);
 
@@ -62,8 +72,18 @@ void stop_anode_timers();
 void init_position();
 void update_time_position();
 int get_current_steps();
+void seek_position(int position);
+void seek_position_relative(int pos_diff);
 
 /*** Display (IN-9s + neopixels) ***/
 void init_display();
 void display_loop();
 void set_display_enabled(bool en);
+void force_display_mode(int mode);
+void release_display();
+bool is_display_forced();
+bool is_display_enabled();
+void blink_time_zero_neopixel();
+String display_mode_name(int mode);
+int get_display_mode();
+uint32_t get_pixel_color(uint16_t n);
