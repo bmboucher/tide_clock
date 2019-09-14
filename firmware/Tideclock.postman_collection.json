@@ -1,0 +1,609 @@
+{
+	"info": {
+		"_postman_id": "0ac9ac01-91e6-465d-9c83-eb745c1387a1",
+		"name": "Tideclock",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Info",
+			"item": [
+				{
+					"name": "tides",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/tides",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"tides"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/status",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Config",
+			"item": [
+				{
+					"name": "config",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/config",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "config/reset",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/config/reset",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"config",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "config/save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/config/save",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"config",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Motion",
+			"item": [
+				{
+					"name": "seek/abs",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "50"
+						},
+						"url": {
+							"raw": "http://{{tideclock}}/seek/abs",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"seek",
+								"abs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "seek/rel",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "20"
+						},
+						"url": {
+							"raw": "http://{{tideclock}}/seek/rel",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"seek",
+								"rel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "time_zero (get)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/time_zero",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"time_zero"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "time_zero (set)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/time_zero",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"time_zero"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DACs",
+			"item": [
+				{
+					"name": "dac (set)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "num",
+								"value": "3",
+								"type": "text"
+							},
+							{
+								"key": "value",
+								"value": "100",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://{{tideclock}}/dac",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"dac"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dac/calibrate (set)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "num",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "pt",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{tideclock}}/dac/calibrate",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"dac",
+								"calibrate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dac/calibrate (get)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "num",
+								"value": "3",
+								"type": "text"
+							},
+							{
+								"key": "pt",
+								"value": "3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://{{tideclock}}/dac/calibrate",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"dac",
+								"calibrate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Neopixels",
+			"item": [
+				{
+					"name": "neopixel/brightness",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "time",
+								"value": "day",
+								"type": "text"
+							},
+							{
+								"key": "value",
+								"value": "80",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{tideclock}}/neopixel/brightness",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"neopixel",
+								"brightness"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "neopixel/offset (get)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/neopixel/offset",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"neopixel",
+								"offset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "neopixel/offset (set)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "3"
+						},
+						"url": {
+							"raw": "http://{{tideclock}}/neopixel/offset",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"neopixel",
+								"offset"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Display",
+			"item": [
+				{
+					"name": "display/disable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/display/disable",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"display",
+								"disable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "display/normal",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/display/normal",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"display",
+								"normal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "display/depoison",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/display/depoison",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"display",
+								"depoison"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "display/wave",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/display/wave",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"display",
+								"wave"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "display/alternating",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/display/alternating",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"display",
+								"alternating"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "display/release",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/display/release",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"display",
+								"release"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "display/random",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/display/random",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"display",
+								"random"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "display/pulse",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/display/random",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"display",
+								"random"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "display/demo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/display/demo",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"display",
+								"demo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "display/enable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{tideclock}}/display/enable",
+							"protocol": "http",
+							"host": [
+								"{{tideclock}}"
+							],
+							"path": [
+								"display",
+								"enable"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "7351b1f0-3510-4dd2-be38-0c252cf897a3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "280155d8-ef09-4ee8-806b-cd5de44524a6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "b5a5b5e4-b67b-4294-bf3c-9ecc822d7889",
+			"key": "tideclock",
+			"value": "tideclock.local",
+			"type": "string"
+		}
+	]
+}
