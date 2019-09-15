@@ -50,6 +50,8 @@ int get_time_steps_offset();
 void set_time_steps_offset(int offset);
 byte get_neopixel_offset();
 void set_neopixel_offset(byte offset);
+int get_neopixel_direction();
+void set_neopixel_direction(int dir);
 byte get_neopixel_brightness(bool day);
 void set_neopixel_brightness(bool day, byte brightness);
 void save_config();
@@ -69,11 +71,15 @@ void start_anode_timers();
 void stop_anode_timers();
 
 /*** Motion ***/
+void set_motion_enabled(bool en);
+bool is_motion_enabled();
 void init_position();
 void update_time_position();
 int get_current_steps();
 void seek_position(int position);
 void seek_position_relative(int pos_diff);
+void seek_time(float hour);
+float get_position_time();
 
 /*** Display (IN-9s + neopixels) ***/
 void init_display();
@@ -84,6 +90,12 @@ void release_display();
 bool is_display_forced();
 bool is_display_enabled();
 void blink_time_zero_neopixel();
+void show_neopixel_direction();
 String display_mode_name(int mode);
 int get_display_mode();
 uint32_t get_pixel_color(uint16_t n);
+
+/*** Loop timer ***/
+void init_loop_timer();
+void mark_loop_timer();
+unsigned long avg_loop_time();

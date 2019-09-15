@@ -14,9 +14,15 @@ void init_display() {
 }
 
 uint16_t adj_neopixel_addr(uint16_t n) {
-  uint16_t adj_n = n + (uint16_t) get_neopixel_offset();
+  int adj_n = (int) get_neopixel_offset();
+  if (get_neopixel_direction() > 0) {
+    adj_n += (int) n;
+  } else {
+    adj_n -= (int) n;
+  }
+  if (adj_n < 0) adj_n += NUM_TUBES;
   if (adj_n >= NUM_TUBES) adj_n -= NUM_TUBES;
-  return adj_n;
+  return (uint16_t)adj_n;
 }
 
 void set_neopixel_color_rgb(uint16_t n, uint32_t c) {
@@ -310,6 +316,16 @@ void blink_time_zero_neopixel() {
     set_neopixel_color_rgb(0, 0x000000);
     strip.show();    
     delay(250);
+  }
+}
+
+void show_neopixel_direction() {
+  for (int j = 0; j < NUM_TUBES; j++) {
+    for (int i = 0; i < NUM_TUBES; i++) {
+      set_neopixel_color_rgb(i, i == j ? 0xffffff : 0x000000);
+    }
+    strip.show();
+    delay(150);
   }
 }
 

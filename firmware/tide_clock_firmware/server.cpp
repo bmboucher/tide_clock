@@ -42,9 +42,12 @@ void publish_status() {
   String message = "{\"main_bus\":" + String(bus_voltage, 2);
   message += ", \"current_time\":\"" + datestr() + "\"";
   message += ", \"position\":" + String(get_current_steps());
+  message += ", \"displayed_time\":" + String(get_position_time(),3);
+  message += ", \"motion_enabled\":" + String(is_motion_enabled() ? "true" : "false");
   message += ", \"display_mode\":\"" + display_mode_name(get_display_mode()) + "\"";
   message += ", \"display_enabled\":" + String(is_display_enabled() ? "true" : "false");
   message += ", \"display_forced\":" + String(is_display_forced() ? "true" : "false");
+  message += ", \"avg_loop_time\":" + String(avg_loop_time());
   message += ", \"dac_values\":[";
   for (int i = 0; i < NUM_TUBES; i++) {
     message += String(get_dac_value(i));
@@ -67,6 +70,13 @@ void seek_handler(bool absolute) {
   } else {
     seek_position_relative(pos);
   }
+  server.send(200, "text/plain", String(get_current_steps()));
+}
+
+void seek_time_handler() {
+  if (server.args() != 1) return;
+  float hr = server.arg(0).toFloat();
+  seek_time(hr);
   server.send(200, "text/plain", String(get_current_steps()));
 }
 
@@ -163,6 +173,15 @@ void set_neopixel_offset_handler() {
   server.send(200, "text/plain", String(offset));
 }
 
+void neopixel_direction_handler() {
+  if (server.method() == HTTP_POST) {
+    if (server.args() != 1) return;
+    set_neopixel_direction(server.arg(0).toInt());
+  }
+  show_neopixel_direction();
+  server.send(200, "text/plain", String(get_neopixel_direction()));
+}
+
 void force_display_mode_handler(int mode) {
   force_display_mode(mode);  
   String message = "Setting display mode to ";
@@ -184,12 +203,21 @@ void start_server() {
     publish_config();
   });
   server.on("/status", publish_status);
+  server.on("/motion/disable", HTTP_POST, []() {
+    set_motion_enabled(false);
+    server.send(200, "text/plain", "Motion disabled");
+  });
+  server.on("/motion/enable", HTTP_POST, []() {
+    set_motion_enabled(true);
+    server.send(200, "text/plain", "Motion enabled");
+  });
   server.on("/seek/abs", HTTP_POST, []() { seek_handler(true); });
   server.on("/seek/rel", HTTP_POST, []() { seek_handler(false); });
+  server.on("/seek/time", HTTP_POST, seek_time_handler);
   server.on("/time_zero", HTTP_POST, set_time_zero);
   server.on("/time_zero", HTTP_GET, []() { 
-    server.send(200, "text/plain", String(get_time_steps_offset()));
     seek_position(get_time_steps_offset()); 
+    server.send(200, "text/plain", String(get_time_steps_offset()));
   });
   server.on("/dac", HTTP_POST, set_dac_handler);
   server.on("/dac/calibrate", HTTP_POST, set_dac_calibrate_handler);
@@ -197,9 +225,10 @@ void start_server() {
   server.on("/neopixel/brightness", HTTP_POST, set_neopixel_brightness_handler);
   server.on("/neopixel/offset", HTTP_POST, set_neopixel_offset_handler);
   server.on("/neopixel/offset", HTTP_GET, []() {
-    server.send(200, "text/plain", String(get_neopixel_offset(), DEC));
     blink_time_zero_neopixel();
+    server.send(200, "text/plain", String(get_neopixel_offset(), DEC));
   });
+  server.on("/neopixel/direction", neopixel_direction_handler);
   for (int mode = NORMAL; mode <= DEMO; mode++) {
     String endpoint = "/display/" + display_mode_name(mode);
     endpoint.toLowerCase();

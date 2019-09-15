@@ -4,10 +4,11 @@
 
 #define DAC_CALIBRATION_BYTES (NUM_TUBES*NUM_DAC_CALIBRATION_POINTS)
 
-#define CALIBRATION_STATUS_BYTE_ADDR  DAC_CALIBRATION_BYTES
-#define TIME_STEPS_OFFSET_ADDR        (CALIBRATION_STATUS_BYTE_ADDR + 1)
-#define NEOPIXEL_OFFSET_ADDR          (TIME_STEPS_OFFSET_ADDR + 2)
-#define NEOPIXEL_BRIGHTNESS_DAY_ADDR  (NEOPIXEL_OFFSET_ADDR + 1)
+#define CALIBRATION_STATUS_BYTE_ADDR   DAC_CALIBRATION_BYTES
+#define TIME_STEPS_OFFSET_ADDR         (CALIBRATION_STATUS_BYTE_ADDR + 1)
+#define NEOPIXEL_OFFSET_ADDR           (TIME_STEPS_OFFSET_ADDR + 2)
+#define NEOPIXEL_DIR_ADDR              (NEOPIXEL_OFFSET_ADDR + 2)
+#define NEOPIXEL_BRIGHTNESS_DAY_ADDR   (NEOPIXEL_DIR_ADDR + 1)
 #define NEOPIXEL_BRIGHTNESS_NIGHT_ADDR (NEOPIXEL_BRIGHTNESS_DAY_ADDR + 1)
 
 int dac_cal_addr(int dac_number, int cal_point) {
@@ -45,6 +46,21 @@ void set_neopixel_offset(byte offset) {
   EEPROM.write(NEOPIXEL_OFFSET_ADDR, offset);  
 }
 
+int get_neopixel_direction() {
+  if (EEPROM.read(NEOPIXEL_DIR_ADDR) == 0) {
+    return 1;
+  } else {
+    return -1;
+  }
+}
+void set_neopixel_direction(int dir) {
+  if (dir > 0) {
+    EEPROM.write(NEOPIXEL_DIR_ADDR, 0);
+  } else {
+    EEPROM.write(NEOPIXEL_DIR_ADDR, 1);
+  }
+}
+
 byte get_neopixel_brightness(bool day) {
   if (day) {
     return EEPROM.read(NEOPIXEL_BRIGHTNESS_DAY_ADDR);    
@@ -72,6 +88,7 @@ void setup_eeprom() {
 void publish_config() {
   String message = "{\"time_0_pos\":" + String(get_time_steps_offset());
   message += ", \"time_0_pixel\":" + String(get_neopixel_offset());
+  message += ", \"pixel_dir\":" + String(get_neopixel_direction());
   message += ", \"brightness_day\":" + String(get_neopixel_brightness(true));
   message += ", \"brightness_night\": " + String(get_neopixel_brightness(false));
   message += ", \"dac_calibrations\":[";
@@ -101,6 +118,7 @@ void init_config() {
   }
   set_time_steps_offset(0);
   set_neopixel_offset(0);
+  set_neopixel_direction(1);
   set_neopixel_brightness(true, 0x40);
   set_neopixel_brightness(false, 0x20);
   EEPROM.write(CALIBRATION_STATUS_BYTE_ADDR, 0x00);

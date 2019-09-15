@@ -3,7 +3,7 @@
 #include <time.h>
 
 #define MOTOR_REV_STEPS 513
-#define MAX_RPM 20
+#define MAX_RPM 10
 #define GEAR_RATIO 84/16
 
 const long MIN_MS_PER_STEP = ceil(60000/(MAX_RPM * MOTOR_REV_STEPS));
@@ -59,9 +59,11 @@ void init_position() {
     }
   }
   step_count = 0;
+  int my_step_count = 0;
   while (digitalRead(HALL) == HIGH) {
     motor_step(1);
-    if (step_count >= CLOCK_REV_STEPS) {
+    my_step_count++;
+    if (my_step_count >= CLOCK_REV_STEPS) {
       Serial.println("Full revolution completed without tripping Hall sensor!!!");
       break;
     }
@@ -71,11 +73,21 @@ void init_position() {
   prev_hall_steps = 0;
 }
 
+bool motion_enabled = true;
+void set_motion_enabled(bool en) {
+  motion_enabled = en;
+}
+bool is_motion_enabled() {
+  return motion_enabled;
+}
+
 // Minimum number of back steps for which the cylinder will do a full revolution
 // This prevents excessive retracing when the Hall sensor is tripped
 #define MIN_BACK_MOTION 10 // Roughly 5 minutes
 
 void update_time_position() {
+  if (!motion_enabled) return;
+  
   unsigned long timestamp = millis();
   if (timestamp < last_step_ms) last_step_ms = timestamp;
   if (timestamp < last_step_ms + MIN_MS_PER_STEP) return;
@@ -97,6 +109,12 @@ void update_time_position() {
 
 int get_current_steps() {
   return step_count;
+}
+float get_position_time() {
+  int time_diff = get_current_steps() - get_time_steps_offset();
+  while (time_diff < 0) time_diff += CLOCK_REV_STEPS;
+  while (time_diff >= CLOCK_REV_STEPS) time_diff -= CLOCK_REV_STEPS;
+  return float(time_diff) * 24 / CLOCK_REV_STEPS;
 }
 
 #define LOCAL_MOVE_STEPS (MOTOR_REV_STEPS/2)
@@ -121,4 +139,10 @@ void seek_position(int position) {
 
 void seek_position_relative(int pos_diff) {
   seek_position(step_count + pos_diff);
+}
+
+void seek_time(float hour) {
+  hour -= floor(hour / 24) * 24;
+  int tgt_steps = (int)(hour * CLOCK_REV_STEPS / 24) + get_time_steps_offset();
+  seek_position(tgt_steps);
 }

@@ -1,7 +1,5 @@
 #include "tide_clock_firmware.h"
 
-//#define MOTION
-
 void setup() {
   pinMode(MAIN_BUS, INPUT);
   pinMode(TMR1, OUTPUT);
@@ -21,24 +19,19 @@ void setup() {
   init_dacs();
   init_display();
   
-  #ifdef MOTION
-  init_position();
-  #endif
-  
+  init_position();  
   start_server();
 
   // Turn on status LED
   digitalWrite(LED_BUILTIN, LOW);
+  init_loop_timer();
 }
 
 void loop() {
   update_tides();
   check_main_bus_voltage();
-
-  #ifdef MOTION
   update_time_position();
-  #endif
-
   display_loop();
   server_loop();
+  mark_loop_timer();
 }
