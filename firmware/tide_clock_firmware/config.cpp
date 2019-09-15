@@ -70,23 +70,22 @@ void setup_eeprom() {
 }
 
 void publish_config() {
-  String message = "CURRENT CONFIG SETTINGS\n";
-  message += "Time 0 position: " + String(get_time_steps_offset()) + "\n";
-  message += "Time 0 neopixel: " + String(get_neopixel_offset()) + "\n";
-  message += "Neopixel brightness (day): " + String(get_neopixel_brightness(true)) + "\n";
-  message += "Neopixel brightness (night): " + String(get_neopixel_brightness(false)) + "\n";
-  message += "\nDAC calibrations:\n";
+  String message = "{\"time_0_pos\":" + String(get_time_steps_offset());
+  message += ", \"time_0_pixel\":" + String(get_neopixel_offset());
+  message += ", \"brightness_day\":" + String(get_neopixel_brightness(true));
+  message += ", \"brightness_night\": " + String(get_neopixel_brightness(false));
+  message += ", \"dac_calibrations\":[";
   for (int dac_number = 0; dac_number < NUM_TUBES; dac_number++) {
-    message += "  DAC ";
-    message += String(dac_number);
-    message += ":\t";
+    if (dac_number > 0) message += ",";
+    message += "[";
     for (int cal_point = 0; cal_point < NUM_DAC_CALIBRATION_POINTS; cal_point++) {
+      if (cal_point > 0) message += ",";
       message += String(get_dac_calibration(dac_number, cal_point), DEC);
-      message += " ";
     }
-    message += "\n";
+    message += "]";
   }
-  server.send(200, "text/plain", message);
+  message += "]}";
+  server.send(200, "application/json", message);
 }
 
 #define MIN_DAC_VALUE 101
