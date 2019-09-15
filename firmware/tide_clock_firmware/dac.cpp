@@ -26,30 +26,30 @@ void select_i2c_channel(byte i2c_channel) {
 }
 
 const byte DAC_ADDRESSES[] PROGMEM = {
-  0x0C, // i2c_channel = 0, A1 = 1, A0 = 1, channel 0
-  0x0D, // i2c_channel = 0, A1 = 1, A0 = 1, channel 1
-  0x0E, // i2c_channel = 0, A1 = 1, A0 = 1, channel 2
-  0x0F, // i2c_channel = 0, A1 = 1, A0 = 1, channel 3
-  0x04, // i2c_channel = 0, A1 = 0, A0 = 1, channel 0
-  0x05, // i2c_channel = 0, A1 = 0, A0 = 1, channel 1
-  0x06, // i2c_channel = 0, A1 = 0, A0 = 1, channel 2
-  0x07, // i2c_channel = 0, A1 = 0, A0 = 1, channel 3
-  0x08, // i2c_channel = 0, A1 = 1, A0 = 0, channel 0
-  0x09, // i2c_channel = 0, A1 = 1, A0 = 0, channel 1
-  0x0A, // i2c_channel = 0, A1 = 1, A0 = 0, channel 2
-  0x0B, // i2c_channel = 0, A1 = 1, A0 = 0, channel 3
-  0x1C, // i2c_channel = 1, A1 = 1, A0 = 1, channel 0
-  0x1D, // i2c_channel = 1, A1 = 1, A0 = 1, channel 1
-  0x1E, // i2c_channel = 1, A1 = 1, A0 = 1, channel 2
-  0x1F, // i2c_channel = 1, A1 = 1, A0 = 1, channel 3
-  0x14, // i2c_channel = 1, A1 = 0, A0 = 1, channel 0
-  0x15, // i2c_channel = 1, A1 = 0, A0 = 1, channel 1
-  0x16, // i2c_channel = 1, A1 = 0, A0 = 1, channel 2
-  0x17, // i2c_channel = 1, A1 = 0, A0 = 1, channel 3
-  0x18, // i2c_channel = 1, A1 = 1, A0 = 0, channel 0
-  0x19, // i2c_channel = 1, A1 = 1, A0 = 0, channel 1
-  0x1A, // i2c_channel = 1, A1 = 1, A0 = 0, channel 2
-  0x1B  // i2c_channel = 1, A1 = 1, A0 = 0, channel 3
+  0b01100, // i2c_channel = 0, A1 = 1, A0 = 1, channel = 0
+  0b01110, // i2c_channel = 0, A1 = 1, A0 = 1, channel = 2
+  0b01101, // i2c_channel = 0, A1 = 1, A0 = 1, channel = 1
+  0b01111, // i2c_channel = 0, A1 = 1, A0 = 1, channel = 3
+  0b00100, // i2c_channel = 0, A1 = 0, A0 = 1, channel = 0
+  0b00110, // i2c_channel = 0, A1 = 0, A0 = 1, channel = 2
+  0b00101, // i2c_channel = 0, A1 = 0, A0 = 1, channel = 1
+  0b00111, // i2c_channel = 0, A1 = 0, A0 = 1, channel = 3
+  0b01000, // i2c_channel = 0, A1 = 1, A0 = 0, channel = 0
+  0b01010, // i2c_channel = 0, A1 = 1, A0 = 0, channel = 2
+  0b01001, // i2c_channel = 0, A1 = 1, A0 = 0, channel = 1
+  0b01011, // i2c_channel = 0, A1 = 1, A0 = 0, channel = 3
+  0b11000, // i2c_channel = 1, A1 = 1, A0 = 0, channel = 0
+  0b11010, // i2c_channel = 1, A1 = 1, A0 = 0, channel = 2
+  0b11001, // i2c_channel = 1, A1 = 1, A0 = 0, channel = 1
+  0b11011, // i2c_channel = 1, A1 = 1, A0 = 0, channel = 3
+  0b10100, // i2c_channel = 1, A1 = 0, A0 = 1, channel = 0
+  0b10110, // i2c_channel = 1, A1 = 0, A0 = 1, channel = 2
+  0b10101, // i2c_channel = 1, A1 = 0, A0 = 1, channel = 1
+  0b10111, // i2c_channel = 1, A1 = 0, A0 = 1, channel = 3
+  0b11100, // i2c_channel = 1, A1 = 1, A0 = 1, channel = 0
+  0b11110, // i2c_channel = 1, A1 = 1, A0 = 1, channel = 2
+  0b11101, // i2c_channel = 1, A1 = 1, A0 = 1, channel = 1
+  0b11111  // i2c_channel = 1, A1 = 1, A0 = 1, channel = 3
 };
 
 // DAC address byte is:
